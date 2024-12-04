@@ -2,7 +2,7 @@
 
 ## Example usage
 
-I'm not publishing to npm for now so just copy/paste from `request-before-paint.ts` into your codebase.
+I'm not publishing to npm for now so just copy/paste from `loop-before-paint.ts` into your codebase.
 
 ```
 // Get a callback after layout but before paint on every frame
@@ -15,26 +15,25 @@ const onBeforePaint = new LoopBeforePaint(() => {
 });
 
 
-
 // When finished
 onBeforePaint.dispose();
 ```
 
-**Caution** if you change anything about the DOM in the requestBeforePaint (layout, styles, elements, cause React to re-render etc) it will cause the browser do another round of style and layout calculations for the same frame. The intent is to only do drawing side effects like canvas draw calls with this function.
+**Caution** if you change anything about the DOM in the loopBeforePaint (layout, styles, elements, cause React to re-render etc) it will cause the browser do another round of style and layout calculations for the same frame. The intent is to only do drawing side effects like canvas draw calls with this function.
 
 
 ## The problem
 It's very difficult to measure DOM and then draw to Canvas 2D or WebGL during the same frame. This leads to most tools being one frame behind DOM in their WebGL drawings.
 
 The order that browsers handle things is roughly:
-1. requestAnimationFrame callbacks
+1. loopAnimationFrame callbacks
 2. style updates
 3. layout calculations
 4. painting the frame
 
 So if you measure a DOM element in a RAF, you're actually working with the previous frame's layout.
 
-Ideally, browsers would give a "requestBeforePaint" type callback that would fire after layout is calculated but before paint happens. But they don't.
+Ideally, browsers would give a "loopBeforePaint" type callback that would fire after layout is calculated but before paint happens. But they don't.
 
 The only way I know to run your own code between steps 3 and 4 above is with ResizeObserver callbacks.
 

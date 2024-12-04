@@ -1,6 +1,6 @@
-# requestBeforePaint
+#requestBeforePaint
 
-## Example usage
+##Example usage
 
 I'm not publishing to npm for now so just copy/paste from `request-before-paint.ts` into your codebase.
 
@@ -20,7 +20,7 @@ const onBeforePaint = new RequestBeforePaint(() => {
 onBeforePaint.dispose();
 ```
 
-## The problem
+##The problem
 It's very difficult to measure DOM and then draw to Canvas 2D or WebGL during the same frame. This leads to most tools being one frame behind DOM in their WebGL drawings.
 
 The order that browsers handle things is roughly:

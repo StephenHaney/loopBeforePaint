@@ -1,4 +1,4 @@
-# requestBeforePaint
+# loopBeforePaint
 
 ## Example usage
 

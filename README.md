@@ -6,7 +6,7 @@ I'm not publishing to npm for now so just copy/paste from `request-before-paint.
 
 ```
 // Get a callback after layout but before paint on every frame
-const onBeforePaint = new RequestBeforePaint(() => {
+const onBeforePaint = new LoopBeforePaint(() => {
     // Grab the updated size of an HTML element
     const rect = someHtmlElem.getBoundingClientRect();
 

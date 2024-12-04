@@ -1,6 +1,6 @@
-#requestBeforePaint
+# requestBeforePaint
 
-##Example usage
+## Example usage
 
 I'm not publishing to npm for now so just copy/paste from `request-before-paint.ts` into your codebase.
 
@@ -20,7 +20,10 @@ const onBeforePaint = new RequestBeforePaint(() => {
 onBeforePaint.dispose();
 ```
 
-##The problem
+**Caution** if you change anything about the DOM in the requestBeforePaint (layout, styles, elements, cause React to re-render etc) it will cause the browser do another round of style and layout calculations for the same frame. The intent is to only do drawing side effects like canvas draw calls with this function.
+
+
+## The problem
 It's very difficult to measure DOM and then draw to Canvas 2D or WebGL during the same frame. This leads to most tools being one frame behind DOM in their WebGL drawings.
 
 The order that browsers handle things is roughly:
@@ -42,5 +45,3 @@ Side quest fun facts:
 So this repo puts a hidden 1px by 1px div on the screen and uses a RAF to resize it every frame. This triggers a ResizeObserver which gives you a handy callback after layout but before paint to take updated DOM measurements and do canvas draw calls that are synced with DOM.
 
 **Bonus** Because layout was just calculated, reading DOM like `getBoundingClientBox` should be "free". I'm doing a couple hundred at a time and my callback is measured under half a millisecond. I haven't thoroughly tested this so please test it for yourself too.
-
-**Caution** if you change anything about the DOM in the requestBeforePaint (layout, styles, elements, cause React to re-render etc) it will cause the browser do another round of style and layout calculations for the same frame. The intent is to only do drawing side effects like canvas draw calls with this function.

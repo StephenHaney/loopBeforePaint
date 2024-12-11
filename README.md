@@ -41,6 +41,6 @@ Side quest fun facts:
 - IntersectionObserver usually runs its callbacks AFTER paint
 - MutationObserver runs callbacks as they mutations are observed, so usually mixed into the RAF stage
 
-So this repo puts a hidden 1px by 1px div on the screen and uses a RAF to resize it every frame. This triggers a ResizeObserver which gives you a handy callback after layout but before paint to take updated DOM measurements and do canvas draw calls that are synced with DOM.
+So this triggers a ResizeObserver callback every frame which gives you a handy callback after layout but before paint to take updated DOM measurements and do canvas draw calls that are synced with DOM.
 
 **Bonus** Because layout was just calculated, reading DOM like `getBoundingClientBox` should be "free". I'm doing a couple hundred at a time and my callback is measured under half a millisecond. I haven't thoroughly tested this so please test it for yourself too.
